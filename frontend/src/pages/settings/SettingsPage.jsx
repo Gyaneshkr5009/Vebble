@@ -40,10 +40,10 @@ const SettingsPage = () => {
 
           {/* Background Button */}
           <ReusableButton
-            onClick={() => navigate('/settings/bg')}
+            onClick={() => navigate('/settings/chat-theme')}
             icon={Wallpaper}
           >
-            Background
+            Chat Theme
           </ReusableButton>
           {/* Change Password */}
           <ReusableButton onClick={() => navigate('/settings/password')}

@@ -5,6 +5,8 @@ import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput"
 import { useAuthStore } from "../store/useAuthStore";
 import {formatMessageTime} from "../lib/utils"
+import { useBackgroundStore } from "../store/useSelectBackGround.js";
+
 
 const ChatContainer = () => {
   const {
@@ -17,6 +19,7 @@ const ChatContainer = () => {
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
+  const { theme } = useBackgroundStore();
 
   useEffect(() => {
     getMessages(selectedUser._id);
@@ -48,7 +51,13 @@ const ChatContainer = () => {
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div
+        className="flex-1 overflow-y-auto p-4 space-y-4 bg-cover bg-center"
+        style={{
+          backgroundImage: theme ? `url(${theme})` : "none",
+          backgroundColor: theme ? "transparent" : "#f0f0f0",  // fallback if no image
+        }}
+      >
         {messages.map((message) => (
           <div
             key={message._id}

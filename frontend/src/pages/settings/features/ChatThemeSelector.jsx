@@ -1,6 +1,6 @@
 import { useChatThemeStore } from '../../../store/useChatThemeStore'
 import ReusableButton from '../../../components/basic components/ReusableButton'
-import { StepBack , Loader } from 'lucide-react'
+import { StepBack , Ban } from 'lucide-react'
 import { useNavigate  } from 'react-router-dom'
 
 const ChatThemeSelector = () => {
@@ -52,13 +52,14 @@ const ChatThemeSelector = () => {
           >
             {/* using ternary Operator as true and false means {if bg.url is not null then theme selected other wise not} */}
             {bg.url ? (
-              <div
-                className="w-full h-40 bg-cover bg-center "
-                style={{ backgroundImage: `url(${bg.url})` }}
+              <img
+                src={bg.url}
+                alt="theme"
+                className="w-full h-40 object-fill"
               />
             ) : (
               <div className="w-full h-40 bg-base-200 flex group items-center justify-center">
-                <Loader className="motion-safe:animate-pulse group-hover:block text-base-content" size={24} />
+                <Ban className="motion-safe:animate-pulse group-hover:block text-base-content" size={24} />
               </div>
             )}
           </div>

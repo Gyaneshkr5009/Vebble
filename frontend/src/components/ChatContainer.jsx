@@ -54,7 +54,8 @@ const ChatContainer = () => {
       <div
         className="flex-1 overflow-y-auto p-4 space-y-4 bg-cover bg-center"
         style={{
-          backgroundImage: theme ? `url(${theme})` : "none"
+          backgroundImage: theme ? `url(${theme})` : "none",
+          backgroundSize: "100% 100%" // this distorts the image like object-fill
         }}
       >
         {messages.map((message) => (

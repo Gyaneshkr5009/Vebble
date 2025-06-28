@@ -19,10 +19,10 @@ const SettingsPage = () => {
       {/* Back Button */}
       <div className="pt-2 flex justify-start mb-4">
         <ReusableButton
-          onClick={() => navigate('/profile')}
+          onClick={() => navigate('/')}
           icon={StepBack}
         >
-          Profile
+          Home
         </ReusableButton>
       </div>
       {/* setting page feature */}

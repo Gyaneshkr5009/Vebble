@@ -23,7 +23,7 @@ const ChatThemeSelector = () => {
     ...Array.from({length: totalThemes}, (_, index) => ({
       id : index+1,
       label: `Theme ${index + 1}`,
-      url: `${basePath}/${index + 1}.jpg`,
+      url: `${basePath}/${index + 1}.webp`,
     })),
   ]
 
@@ -53,11 +53,11 @@ const ChatThemeSelector = () => {
             {/* using ternary Operator as true and false means {if bg.url is not null then theme selected other wise not} */}
             {bg.url ? (
               <div
-                className="w-full h-60 bg-cover bg-center"
+                className="w-full h-40 bg-cover bg-center "
                 style={{ backgroundImage: `url(${bg.url})` }}
               />
             ) : (
-              <div className="w-full h-60 bg-base-200 flex group items-center justify-center">
+              <div className="w-full h-40 bg-base-200 flex group items-center justify-center">
                 <Loader className="motion-safe:animate-pulse group-hover:block text-base-content" size={24} />
               </div>
             )}

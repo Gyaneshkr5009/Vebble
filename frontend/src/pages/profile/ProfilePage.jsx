@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Camera, Mail, User } from "lucide-react";
 
@@ -20,6 +20,22 @@ const ProfilePage = () => {
       await updateProfile({ profilePic: base64Image });
     };
   };
+  // State to manage name editing
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [newName, setNewName] = useState(authUser?.fullName || "");
+
+  const handleUpdateProfile = async () => {
+    await updateProfile({ profilePic: selectedImg || authUser.profilePic, newName });
+    // Exit editing mode after successful update
+    setIsEditingName(false);
+  };
+
+  //useEffect() is a React Hook that lets you perform side effects in a component — like syncing state, fetching data, listening for changes, etc.
+  useEffect(() => {
+    setNewName(authUser?.fullName || "");
+    setSelectedImg(null); // optional: clears preview after update
+  }, [authUser]);
+
 
   return (
     <div className="min-h-screen pt-20">
@@ -71,11 +87,35 @@ const ProfilePage = () => {
                 <User className="w-4 h-4 text-base-content/70" />
                 <div className="text-base-content/70">Full Name</div>
               </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border border-base-300">
-                {authUser?.fullName}
-              </p>
+              {/* Name editing section */}
+              {isEditingName ? (
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="text"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="px-4 py-2.5 bg-base-200 rounded-lg border border-base-300 flex-1"
+                  />
+                  <button
+                    onClick={handleUpdateProfile}
+                    disabled={isUpdatingProfile}
+                    className="px-4 py-2 rounded-lg bg-primary text-white text-sm"
+                  >
+                    {isUpdatingProfile ? "Saving..." : "Save"}
+                  </button>
+                </div>
+              ) : (
+                <div className="flex justify-between items-center px-4 py-2.5 bg-base-200 rounded-lg border border-base-300">
+                  <span>{authUser?.fullName}</span>
+                  <button
+                    onClick={() => setIsEditingName(true)}
+                    className="text-sm text-primary underline"
+                  >
+                    Edit
+                  </button>
+                </div>
+              )}
             </div>
-
             <div className="space-y-1.5">
               <div className="text-sm text-base-content flex items-center gap-2">
                 <Mail className="w-4 h-4 text-base-content/70" />

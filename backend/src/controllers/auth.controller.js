@@ -111,11 +111,15 @@ export const updateProfile = async (req, res) => {
     //for able to do that we require cloudinary to upload the image
     try {
         const {profilePic} = req.body;
+        const {newName} = req.body; // Assuming you want to update the user's name as well
         const userId = req.user._id; // Get the authenticated user's ID from the request object
 
         // Check if the profilePic is provided
         if(!profilePic) {
             return res.status(400).json({ message: "Profile picture is required" });
+        }
+        if(!newName) {
+            return res.status(400).json({ message: "New name is required" });
         }
 
         // Upload the profile picture to Cloudinary
@@ -123,6 +127,11 @@ export const updateProfile = async (req, res) => {
         const uploadResponse = await cloudinary.uploader.upload(profilePic);
         //now we will get the response from cloudinary which contains the secure_url of the uploaded image to store it in the database
         const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url } , { new: true }); // please hover over the new: true to understand what it does
+        // Update the user's name if provided
+        if (newName) {
+            updatedUser.fullName = newName;
+            await updatedUser.save(); // Save the updated user to the database
+        }
 
         res.status(200).json({updatedUser});
     } catch (error) {

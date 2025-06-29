@@ -76,20 +76,20 @@ const ChatContainer = () => {
                 />
               </div>
             </div>
-            <div className="chat-header mb-1">
-              <time className="text-xs opacity-50 ml-1">
-                {formatMessageTime(message.createdAt)}
-              </time>
-            </div>
-            <div className="chat-bubble flex flex-col">
+            <div className="chat-bubble chat-bubble-accent p-2 px-2 rounded-xl max-w-[75%]">
               {message.image && (
                 <img
                   src={message.image}
                   alt="Attachment"
-                  className="sm:max-w-[200px] rounded-md mb-2"
+                  className="rounded-md mb-1 max-w-[200px]"
                 />
               )}
-              {message.text && <p>{message.text}</p>}
+              {message.text && <p className="text-sm">{message.text}</p>}
+              <div className="flex justify-end mt-1">
+                <time className="text-[11px] opacity-60 whitespace-nowrap">
+                  {formatMessageTime(message.createdAt)}
+                </time>
+              </div>
             </div>
           </div>
         ))}

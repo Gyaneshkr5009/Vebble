@@ -25,7 +25,7 @@ const LoginPage = () => {
           {/* LOGO */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
-              <div className="flex items-center gap-2 animate-bounce">
+              <div className="flex items-center gap-2">
                 {/* Icon wrapper */}
                 <div className="p-2 bg-primary/10 rounded-xl flex items-center justify-center">
                   <MessageCircle className="size-9 text-primary" />

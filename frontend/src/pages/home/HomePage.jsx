@@ -7,37 +7,21 @@ const HomePage = () => {
   return (
     <div className="h-screen bg-base-200 relative overflow-hidden">
       {/* Subtle background elements using DaisyUI classes */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Floating chat bubbles */}
-        {[...Array(8)].map((_, i) => {
-          const size = Math.random() * 200 + 100;
-          const left = Math.random() * 100;
-          const top = Math.random() * 100;
-          const colorClass = i % 3 === 0 ? 'bg-primary/10' : 
-                           i % 2 === 0 ? 'bg-secondary/10' : 
-                           'bg-accent/10';
-          const delay = Math.random() * 5;
-          const duration = 20 + Math.random() * 20;
-          
-          return (
-            <div 
-              key={i}
-              className={`absolute rounded-full ${colorClass} animate-float blur-xl`}
-              style={{
-                width: `${size}px`,
-                height: `${size}px`,
-                left: `${left}%`,
-                top: `${top}%`,
-                animationDelay: `${delay}s`,
-                animationDuration: `${duration}s`,
-              }}
-            />
-          );
-        })}
-        
-        {/* Grid pattern using DaisyUI classes */}
-        <div className="absolute inset-0 opacity-5 bg-[length:40px_40px] bg-grid-pattern"></div>
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Soft multi-tone radial background */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-base-200/40 via-base-100/10 to-transparent dark:from-base-300/40 dark:via-base-200/10 dark:to-transparent"></div>
+
+        {/* Diagonal moving stripes */}
+        <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,theme(colors.base-content/5)_0px,theme(colors.base-content/5)_1px,transparent_1px,transparent_35px)] animate-background-stripes opacity-30"></div>
+
+        {/* Blurred glass orbs for depth */}
+        <div className="absolute top-1/4 left-1/4 w-56 h-56 bg-primary/15 dark:bg-primary/25 rounded-full blur-[80px] animate-pulse-slow"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-secondary/15 dark:bg-secondary/25 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
+
+        {/* Optional center ambient glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/10 dark:bg-accent/20 rounded-full blur-[120px] animate-pulse-slow delay-1500"></div>
       </div>
+
 
       {/* Main content container */}
       <div className="relative z-10 flex items-center justify-center pt-20 px-4">

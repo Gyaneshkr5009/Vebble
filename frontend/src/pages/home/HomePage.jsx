@@ -8,27 +8,23 @@ const HomePage = () => {
     <div className="h-screen bg-base-200 relative overflow-hidden">
       {/* Subtle background elements using DaisyUI classes */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Base layer using DaisyUI theme variables */}
-        <div className="absolute inset-0 bg-base-100/90 dark:bg-base-300/90" />
+        {/* Base layer - ensures contrast */}
+        <div className="absolute inset-0 bg-base-100/50 dark:bg-base-300/50" />
         
-        {/* Theme-adaptive grid pattern */}
+        {/* High-visibility grid - uses primary color instead of primary-content */}
         <div
-          className="absolute inset-0 opacity-20 dark:opacity-30"
+          className="absolute inset-0 opacity-30 dark:opacity-40"
           style={{
             backgroundImage: `
-              linear-gradient(var(--fallback-pc,oklch(var(--pc)/0.5)) 1px, transparent 1px),
-              linear-gradient(90deg, var(--fallback-pc,oklch(var(--pc)/0.5)) 1px, transparent 1px)
+              linear-gradient(var(--fallback-p,oklch(var(--p)/0.6)) 1px, transparent 1px),
+              linear-gradient(90deg, var(--fallback-p,oklch(var(--p)/0.6)) 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px',
-            backgroundPosition: '-19px -19px'
+            backgroundPosition: '-19px -19px',
+            mixBlendMode: 'screen' // Makes light colors pop on dark backgrounds
           }}
         />
         
-        {/* Theme-adaptive border accents */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
-        <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
       </div>
 
       {/* Main content container */}

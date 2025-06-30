@@ -126,12 +126,15 @@ export const updateProfile = async (req, res) => {
         // Note: Ensure that the profilePic is a valid image URL or base64 string
         const uploadResponse = await cloudinary.uploader.upload(profilePic);
         //now we will get the response from cloudinary which contains the secure_url of the uploaded image to store it in the database
-        const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url } , { new: true }); // please hover over the new: true to understand what it does
-        // Update the user's name if provided
-        if (newName) {
-            updatedUser.fullName = newName;
-            await updatedUser.save(); // Save the updated user to the database
-        }
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { 
+                profilePic: uploadResponse.secure_url,
+                fullName: newName 
+            },
+            { new: true }
+        ); // please hover over the new: true to understand what it does
+                    
 
         res.status(200).json({updatedUser});
     } catch (error) {

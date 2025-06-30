@@ -8,20 +8,28 @@ const HomePage = () => {
     <div className="h-screen bg-base-200 relative overflow-hidden">
       {/* Subtle background elements using DaisyUI classes */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-        {/* Soft multi-tone radial background */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-base-200/40 via-base-100/10 to-transparent dark:from-base-300/40 dark:via-base-200/10 dark:to-transparent"></div>
-
-        {/* Diagonal moving stripes */}
-        <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,theme(colors.base-content/5)_0px,theme(colors.base-content/5)_1px,transparent_1px,transparent_35px)] animate-background-stripes opacity-30"></div>
-
-        {/* Blurred glass orbs for depth */}
-        <div className="absolute top-1/4 left-1/4 w-56 h-56 bg-primary/15 dark:bg-primary/25 rounded-full blur-[80px] animate-pulse-slow"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-secondary/15 dark:bg-secondary/25 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
-
-        {/* Optional center ambient glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/10 dark:bg-accent/20 rounded-full blur-[120px] animate-pulse-slow delay-1500"></div>
+        {/* Base layer using DaisyUI theme variables */}
+        <div className="absolute inset-0 bg-base-100/90 dark:bg-base-300/90" />
+        
+        {/* Theme-adaptive grid pattern */}
+        <div
+          className="absolute inset-0 opacity-20 dark:opacity-30"
+          style={{
+            backgroundImage: `
+              linear-gradient(var(--fallback-pc,oklch(var(--pc)/0.5)) 1px, transparent 1px),
+              linear-gradient(90deg, var(--fallback-pc,oklch(var(--pc)/0.5)) 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px',
+            backgroundPosition: '-19px -19px'
+          }}
+        />
+        
+        {/* Theme-adaptive border accents */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+        <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
+        <div className="absolute right-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
       </div>
-
 
       {/* Main content container */}
       <div className="relative z-10 flex items-center justify-center pt-20 px-4">

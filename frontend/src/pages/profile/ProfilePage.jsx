@@ -1,6 +1,7 @@
 import { useState , useEffect } from "react";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Camera, Mail, User } from "lucide-react";
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
@@ -24,19 +25,43 @@ const ProfilePage = () => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [newName, setNewName] = useState(authUser?.fullName || "");
 
+  // Function to validate email format
+  const [isEditingEmail, setIsEditingEmail] = useState(false);
+  const [newEmail, setNewEmail] = useState(authUser?.email || "");
+
+  const isValidEmail = (email) => {
+    const allowedDomains = ["gmail.com", "yahoo.com", "outlook.com"];
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if(!emailRegex.test(email)) {
+      return false; // Invalid email format
+    }
+
+    const domain = email.split("@")[1];
+    return allowedDomains.includes(domain); // Check if domain is allowed
+  }
+
   const handleUpdateProfile = async () => {
-    await updateProfile({ profilePic: selectedImg || authUser.profilePic, newName });
+    //checking if the newEmail is valid
+    if(isEditingEmail && !isValidEmail(newEmail)) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    await updateProfile({ profilePic: selectedImg || authUser.profilePic, newName , newEmail });
     // Exit editing mode after successful update
+    setIsEditingEmail(false);
     setIsEditingName(false);
   };
 
   //useEffect() is a React Hook that lets you perform side effects in a component — like syncing state, fetching data, listening for changes, etc.
   useEffect(() => {
     setNewName(authUser?.fullName || "");
+    setNewEmail(authUser?.email || "");
     setSelectedImg(null); // optional: clears preview after update
   }, [authUser]);
 
-
+ 
   return (
     <div className="min-h-screen pt-20">
       <div className="max-w-2xl mx-auto p-4 py-8">
@@ -121,9 +146,34 @@ const ProfilePage = () => {
                 <Mail className="w-4 h-4 text-base-content/70" />
                 <div className="text-base-content/70">Email Address</div>
               </div>
-              <p className="px-4 py-2.5 bg-base-200 rounded-lg border border-base-300">
-                {authUser?.email}
-              </p>
+              {/* Email editing section */}
+              {isEditingEmail ? (
+                <div className="flex gap-2 items-center">
+                  <input
+                    type="text"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    className="px-4 py-2.5 bg-base-200 rounded-lg border border-base-300 flex-1"
+                  />
+                  <button
+                    onClick={handleUpdateProfile}
+                    disabled={isUpdatingProfile}
+                    className="px-4 py-2 rounded-lg bg-primary text-white text-sm"
+                  >
+                    {isUpdatingProfile ? "Saving..." : "Save"}
+                  </button>
+                </div>
+              ) : (
+                <div className="flex justify-between items-center px-4 py-2.5 bg-base-200 rounded-lg border border-base-300">
+                  <span>{authUser?.email}</span>
+                  <button
+                    onClick={() => setIsEditingEmail(true)}
+                    className="text-sm text-primary underline"
+                  >
+                    Edit
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 

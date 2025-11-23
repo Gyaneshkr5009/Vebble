@@ -1,9 +1,9 @@
 import ChatThemeSelector from "./ChatThemeSelector";
 import ThemeSelector from "./ThemeSelector";
-import PasswordChanger from "./PasswordChanger";
+import AboutUs from "./AboutUs";
 
 export{
     ChatThemeSelector,
     ThemeSelector,
-    PasswordChanger
+    AboutUs
 }

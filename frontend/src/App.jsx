@@ -5,7 +5,7 @@ import {HomePage , SignUpPage, LoginPage, SettingsPage, ProfilePage} from './pag
 import { useAuthStore } from './store/useAuthStore.js'
 import {useThemeStore} from './store/useThemeStore.js'
 import { Toaster } from 'react-hot-toast'
-import { ChatThemeSelector , ThemeSelector , PasswordChanger} from './pages/settings/features/index.js'
+import { ChatThemeSelector , ThemeSelector , AboutUs} from './pages/settings/features/index.js'
 
 const App = () => {
   const{authUser,checkAuth , isCheckingAuth , onlineUsers} =  useAuthStore();
@@ -49,7 +49,7 @@ const App = () => {
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/settings/theme" element={<ThemeSelector />} />
         <Route path="/settings/chat-theme" element={<ChatThemeSelector />} />
-        <Route path="/settings/password" element={<PasswordChanger />} />
+        <Route path="/settings/about-us" element={<AboutUs />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/profile" element={authUser ?<ProfilePage /> : <Navigate to="/login"/>} />
         {/* future routes if needed */}

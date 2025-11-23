@@ -2,7 +2,7 @@ import ReusableButton from '../../../components/basic components/ReusableButton'
 import { useNavigate } from 'react-router-dom';
 import { StepBack } from 'lucide-react';
 
-const PasswordChanger = () => {
+const AboutUs = () => {
   const navigate = useNavigate();
 
   return (
@@ -23,4 +23,4 @@ const PasswordChanger = () => {
   )
 }
 
-export default PasswordChanger
+export default AboutUs

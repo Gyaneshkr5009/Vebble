@@ -46,10 +46,10 @@ const SettingsPage = () => {
             Chat Theme
           </ReusableButton>
           {/* Change Password */}
-          <ReusableButton onClick={() => navigate('/settings/password')}
+          <ReusableButton onClick={() => navigate('/settings/about-us')}
             icon = {Lock}
           >
-            Change Password
+            AboutUs
           </ReusableButton>
 
           {/* more buttons can be added here */}

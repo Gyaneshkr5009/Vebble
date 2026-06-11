@@ -1,6 +1,7 @@
 import React, { useContext, useRef} from 'react'
 import { vebbleAiBackendContext } from '../../constants/VebbleAiContext';
 import { MessageCircle } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 function ChatSession() {
    const {sendPromptToSpring , aiData , input , setInput , showResult,isLoading} = useContext(vebbleAiBackendContext);
@@ -64,7 +65,28 @@ function ChatSession() {
                   </div>
                 ) : aiData === null ? (
                     <span className="text-error/80 font-thin">There was an error generating a response</span>
-                  ) : aiData}
+                  ) : typeof aiData === 'string' ? (
+                    
+                    <div className="prose prose-sm max-w-none text-base-content prose-headings:text-base-content prose-strong:text-base-content">
+                      <ReactMarkdown
+                        components={{
+                          a: ({ node, ...props }) => (
+                            <a 
+                              {...props} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className="text-primary underline hover:text-primary-focus transition-colors font-medium"
+                            />
+                          )
+                        }}
+                      >
+                        {aiData}
+                      </ReactMarkdown>
+                    </div>
+
+                  ) : (
+                    <span className="text-error/80 font-thin">Invalid data format received</span>
+                  )}
               </div>
             </div>
           </div>

@@ -13,6 +13,10 @@ function VebbleAiContext({children}) {
     });
     const sendPromptToSpring = async(userInput) => {
         if(!userInput.trim()) return;
+        if (responseState.loading) {
+            console.warn("Operation locked. Parallel transaction dropped.");
+            return;
+        }
         setShowResult(true);
 
         setResponseState({data : null , loading : true , error : null});

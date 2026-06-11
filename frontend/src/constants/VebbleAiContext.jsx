@@ -22,7 +22,7 @@ function VebbleAiContext({children}) {
         setResponseState({data : null , loading : true , error : null});
 
         try{
-            const response = await fetch('http://localhost:8080/api/vebble-ai/reply', {
+            const response = await fetch('https://vebble-ai-backend.onrender.com/api/vebble-ai/reply', {
                 method: 'POST',
                 headers: {
                 'Content-Type': 'application/json',

@@ -42,12 +42,15 @@ const SignUpPage = () => {
           {/* LOGO */}
           <div className="text-center mb-8">
             <div className="flex flex-col items-center gap-2 group">
-              <div className="h-11 w-fill px-2 rounded-xl bg-primary/10 flex items-center justify-center 
-              group-hover:bg-primary/20 transition-colors"
+              <div className="h-11 w-fill px-2 rounded-xl flex items-center justify-center "
               >
                 <div className="flex items-center gap-2">
-                  <MessageCircle className="size-9 text-primary" />
-                  <span className="font-bold text-2xl text-primary">Vebble</span>
+                  <div className="p-2 bg-primary/10 rounded-xl flex items-center justify-center">
+                    <MessageCircle className="size-9 text-primary" />
+                  </div>
+                  <h1 className="text-3xl font-black tracking-tight text-base-content">
+                    Vebble
+                  </h1>
                 </div>
               </div>
               <h1 className="text-2xl font-bold mt-2">Create Account</h1>

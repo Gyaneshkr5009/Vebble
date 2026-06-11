@@ -29,7 +29,7 @@ const ThemeSelector = () => {
     ]
 
   return (
-    <div className="min-h-screen container mx-auto px-4 pt-20 pb-4 max-w-5xl">
+    <div className="min-h-screen container mx-auto px-4 pt-20 pb-4 min-w-full">
       <div className="pt-2 flex justify-start mb-4">
         <ReusableButton
           onClick={() => navigate('/settings')}
@@ -47,7 +47,7 @@ const ThemeSelector = () => {
       </div>
 
       {/* compact square grid */}
-      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2.5">
+      <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-7 gap-2.5">
         {THEMES.map((t, index) => {
           const isActive = theme === t;
           const label = t.charAt(0).toUpperCase() + t.slice(1);

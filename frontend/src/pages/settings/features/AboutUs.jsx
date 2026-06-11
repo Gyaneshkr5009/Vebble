@@ -6,7 +6,7 @@ const AboutUs = () => {
   const navigate = useNavigate();
 
   return (
-    <div className='min-h-screen container mx-auto px-4 pt-20 pb-2 max-w-5xl'>
+    <div className='min-h-screen container mx-auto px-4 pt-20 pb-2 min-w-full'>
       {/* Back Button */}
       <div className="pt-2 flex justify-start mb-4">
         <ReusableButton

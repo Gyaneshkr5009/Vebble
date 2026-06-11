@@ -28,9 +28,9 @@ const ChatThemeSelector = () => {
   ]
 
   return (
-    <div className='min-h-screen container mx-auto px-4 pt-20 pb-2 max-w-5xl'>
+    <div className='min-h-screen container mx-auto px-4 pt-20 pb-2 min-w-full'>
       {/* Back Button */}
-      <div className="pt-2 flex justify-start mb-4">
+      <div className="pt-2 flex justify-start ms-3 mb-4">
         <ReusableButton
           onClick={() => navigate('/settings')}
           icon={StepBack}
@@ -39,7 +39,7 @@ const ChatThemeSelector = () => {
         </ReusableButton>
       </div>
       {/* Theme Images*/}
-      <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6 pl-4 pr-4">
+      <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 pl-4 pr-4">
         {themes.map((bg) => (
           <div
             key={bg.id}

@@ -15,7 +15,7 @@ const SettingsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen container mx-auto px-4 pt-20 pb-2 max-w-5xl">
+    <div className="min-h-screen container px-4 pt-20 pb-2 min-w-full">
       {/* Back Button */}
       <div className="pt-2 flex justify-start mb-4">
         <ReusableButton
@@ -29,94 +29,64 @@ const SettingsPage = () => {
       <div className="space-y-6">
         {/* Minimal Feature Buttons Section */}
         <h3 className="text-lg font-semibold mb-3">Features</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-4">
           {/* Theme Button */}
-          <ReusableButton
-            onClick={() => navigate('/settings/theme')}
-            icon={PaintbrushVertical }
-          >
-            Theme
-          </ReusableButton>
-
-          {/* Background Button */}
-          <ReusableButton
-            onClick={() => navigate('/settings/chat-theme')}
-            icon={Wallpaper}
-          >
-            Chat Theme
-          </ReusableButton>
-          {/* Change Password */}
-          <ReusableButton onClick={() => navigate('/settings/about-us')}
-            icon = {Lock}
-          >
-            AboutUs
-          </ReusableButton>
-
-          {/* more buttons can be added here */}
-        </div>
-        {/* Preview Section */}
-        <h3 className="text-lg font-semibold mb-3">Preview</h3>
-        <div className="rounded-xl border border-base-300 overflow-hidden bg-base-100 shadow-lg">
-          <div className="p-4 bg-base-200">
-            <div className="max-w-lg mx-auto">
-              {/* Mock Chat UI */}
-              <div className="bg-base-100 rounded-xl shadow-sm overflow-hidden">
-                {/* Chat Header */}
-                <div className="px-4 py-3 border-b border-base-300 bg-base-100">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-content font-medium">
-                      G
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-sm">Gyanesh Kumar</h3>
-                      <p className="text-xs text-base-content/70">Community Admin</p>
-                    </div>
-                  </div>
-                </div>
-                {/* Chat Message */}
-                <div className="p-4 space-y-4 min-h-[200px] max-h-[200px] overflow-y-auto bg-base-100">
-                  <div className="flex justify-start">
-                    <div className="max-w-[80%] rounded-xl p-3 shadow-sm bg-base-200">
-                      <p className="text-sm font-medium">🎉 Hey there!</p>
-                      <p className="text-sm">
-                        Join our awesome community and stay connected for updates, tips, and more!
-                      </p>
-                      <p className="text-[10px] mt-1.5 text-base-content/70">Just now</p>
-                    </div>
-                  </div>
-                  <div className="flex justify-start">
-                    <div className="max-w-[80%] rounded-xl p-3 shadow-sm bg-base-200 flex gap-4 items-center">
-                      {/* Floating Icons */}
-                      <a
-                        href="https://www.instagram.com/revnation.future/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-pink-500 hover:scale-110 transition transform"
-                      >
-                        <Instagram size={20} />
-                      </a>
-                      <a
-                        href="https://www.facebook.com/gyanesh.kumar.796569"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:scale-110 transition transform"
-                      >
-                        <Facebook size={20} />
-                      </a>
-                      <a
-                        href="https://www.youtube.com/@clashgamer8867"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-red-600 hover:scale-110 transition transform"
-                      >
-                        <Youtube size={20} />
-                      </a>
-                    </div>
-                  </div>
-                </div>
+          <div className="p-4 rounded-xl border border-base-300 bg-base-200/40 hover:bg-base-200/80 transition-all duration-200 flex flex-col justify-between gap-5 group">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform shrink-0">
+                <PaintbrushVertical className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <h4 className="font-medium text-sm truncate">Interface Theme</h4>
+                <p className="text-xs text-base-content/60 mt-0.5 line-clamp-2">Change app colors and accents</p>
               </div>
             </div>
+            <ReusableButton
+              onClick={() => navigate('/settings/theme')}
+              className="w-full btn-primary btn-sm rounded-lg"
+            >
+              Configure
+            </ReusableButton>
           </div>
+
+          {/* Background Button */}
+          <div className="p-4 rounded-xl border border-base-300 bg-base-200/40 hover:bg-base-200/80 transition-all duration-200 flex flex-col justify-between gap-5 group">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-secondary/10 text-secondary group-hover:scale-105 transition-transform shrink-0">
+                <Wallpaper className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <h4 className="font-medium text-sm truncate">Chat Wallpaper</h4>
+                <p className="text-xs text-base-content/60 mt-0.5 line-clamp-2">Update message window context</p>
+              </div>
+            </div>
+            <ReusableButton
+              onClick={() => navigate('/settings/chat-theme')}
+              className="w-full btn-secondary btn-sm rounded-lg"
+            >
+              Change Theme
+            </ReusableButton>
+          </div>
+          {/* Change Password */}
+          <div className="p-4 rounded-xl border border-base-300 bg-base-200/40 hover:bg-base-200/80 transition-all duration-200 flex flex-col justify-between gap-5 group">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover:scale-105 transition-transform shrink-0">
+                <Lock className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <h4 className="font-medium text-sm truncate">About Us & Rules</h4>
+                <p className="text-xs text-base-content/60 mt-0.5 line-clamp-2">Review product security notes</p>
+              </div>
+            </div>
+            <ReusableButton
+              onClick={() => navigate('/settings/about-us')}
+              className="w-full btn-accent btn-sm rounded-lg"
+            >
+              Read More
+            </ReusableButton>
+          </div>
+
+          {/* more buttons can be added here */}
         </div>
       </div>
     </div>

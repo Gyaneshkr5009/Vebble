@@ -32,9 +32,9 @@ const LoginPage = () => {
                 </div>
 
                 {/* Text */}
-                <span className="text-primary font-semibold text-2xl tracking-wide">
+                <h1 className="text-3xl font-black tracking-tight text-base-content">
                   Vebble
-                </span>
+                </h1>
               </div>
               <h1 className="text-2xl font-bold mt-2">Welcome Back</h1>
               <p className="text-base-content/60">Sign in to your account</p>

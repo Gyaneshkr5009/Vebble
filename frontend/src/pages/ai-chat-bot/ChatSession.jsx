@@ -47,7 +47,7 @@ function ChatSession() {
           <div className='flex flex-col w-full space-y-6'>
             <div className='justify-end w-full flex'>
               <div className='max-w-[75%] bg-neutral text-neutral-content rounded-2xl px-4 py-3 text-sm md:text-base shadow-sm font-normal'>
-                your prompt
+                {input}
               </div>
             </div>
             <div className="flex items-start space-x-3 w-full">

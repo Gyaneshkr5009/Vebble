@@ -20,7 +20,7 @@ const App = () => {
 
     const timer = setTimeout(() => {
       setShowSplash(false);
-    },3000);
+    },2500);
 
     return () => clearTimeout(timer);
     // This will check if the user is authenticated when the app loads

@@ -31,7 +31,13 @@ function VebbleAiContext({children}) {
             });
 
             if (!response.ok) {
-                throw new Error(`Server responded with status: ${response.status}`);
+                if (response.status === 429) {
+                    throw new Error("Too Many Requests: Server processing limits reached.");
+                }
+                else if(response.status === 503){
+                    throw new Error("This model is currently experiencing high demand. Spikes in demand are usually temporary.");
+                }
+                else throw new Error(`Server responded with status: ${response.status}`);
             }
             const result = await response.text();
 

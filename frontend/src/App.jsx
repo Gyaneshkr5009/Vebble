@@ -7,6 +7,7 @@ import {useThemeStore} from './store/useThemeStore.js'
 import { Toaster } from 'react-hot-toast'
 import { MessageCircle } from 'lucide-react'
 import { ChatThemeSelector , ThemeSelector , AboutUs} from './pages/settings/features/index.js'
+import {Sudoku , Games} from './pages/settings/games/index.js'
 
 const App = () => {
   const{authUser,checkAuth , isCheckingAuth , onlineUsers} =  useAuthStore();
@@ -83,6 +84,8 @@ const App = () => {
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/profile" element={authUser ?<ProfilePage /> : <Navigate to="/login"/>} />
         <Route path='/vebbleAi' element={authUser ? <VebbleAi /> : <Navigate to="/login"/>} />
+        <Route path='/games' element = {<Games />}/>
+        <Route path='/games/sudoku' element= {<Sudoku/>} />
         {/* future routes if needed */}
       </Routes>
       <Toaster/>

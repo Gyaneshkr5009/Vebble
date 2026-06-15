@@ -1,14 +1,6 @@
-import { StepBack ,Instagram , Facebook , Youtube } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ReusableButton from "../../components/basic components/ReusableButton";
-import { Lock , PaintbrushVertical , Wallpaper } from "lucide-react";
-
-const PREVIEW_MESSAGES = [
-  { id: 1, content: "👋 Hey there! Thanks for checking out my profile.", isSent: false },
-  { id: 2, content: "✨ Join our growing community on YouTube and Instagram!", isSent: true },
-  { id: 3, content: "📺 YouTube: @clashgamer8867", isSent: true },
-  { id: 4, content: "📸 Instagram: @gyanesh100", isSent: true },
-];
+import { Lock , PaintbrushVertical , Wallpaper , StepBack , Gamepad2 } from "lucide-react";
 
 
 const SettingsPage = () => {
@@ -33,7 +25,7 @@ const SettingsPage = () => {
           {/* Theme Button */}
           <div className="p-4 rounded-xl border border-base-300 bg-base-200/40 hover:bg-base-200/80 transition-all duration-200 flex flex-col justify-between gap-5 group">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:scale-105 transition-transform shrink-0">
+              <div className="p-2 rounded-lg bg-primary/10 text-primary/90 group-hover:scale-105 transition-transform shrink-0">
                 <PaintbrushVertical className="h-5 w-5" />
               </div>
               <div className="min-w-0">
@@ -43,7 +35,7 @@ const SettingsPage = () => {
             </div>
             <ReusableButton
               onClick={() => navigate('/settings/theme')}
-              className="w-full btn-primary btn-sm rounded-lg"
+              className="w-full btn-accent btn-sm rounded-lg"
             >
               Configure
             </ReusableButton>
@@ -52,7 +44,7 @@ const SettingsPage = () => {
           {/* Background Button */}
           <div className="p-4 rounded-xl border border-base-300 bg-base-200/40 hover:bg-base-200/80 transition-all duration-200 flex flex-col justify-between gap-5 group">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-secondary/10 text-secondary group-hover:scale-105 transition-transform shrink-0">
+              <div className="p-2 rounded-lg bg-primary/10 text-primary/90 group-hover:scale-105 transition-transform shrink-0">
                 <Wallpaper className="h-5 w-5" />
               </div>
               <div className="min-w-0">
@@ -62,15 +54,33 @@ const SettingsPage = () => {
             </div>
             <ReusableButton
               onClick={() => navigate('/settings/chat-theme')}
-              className="w-full btn-secondary btn-sm rounded-lg"
+              className="w-full btn-accent btn-sm rounded-lg"
             >
               Change Theme
+            </ReusableButton>
+          </div>
+          {/* Games */}
+          <div className="p-4 rounded-xl border border-base-300 bg-base-200/40 hover:bg-base-200/80 transition-all duration-200 flex flex-col justify-between gap-5 group">
+            <div className="flex items-start gap-3">
+              <div className="p-2 rounded-lg bg-primary/10 text-primary/90 group-hover:scale-105 transition-transform shrink-0">
+                <Gamepad2 className="h-5 w-5" />
+              </div>
+              <div className="min-w-0">
+                <h4 className="font-medium text-sm truncate">Games Zone</h4>
+                <p className="text-xs text-base-content/60 mt-0.5 line-clamp-2">Explore the arcade collections.</p>
+              </div>
+            </div>
+            <ReusableButton
+              onClick={() => navigate('/games/')}
+              className="w-full btn-accent btn-sm rounded-lg"
+            >
+              Enter Arcade
             </ReusableButton>
           </div>
           {/* Change Password */}
           <div className="p-4 rounded-xl border border-base-300 bg-base-200/40 hover:bg-base-200/80 transition-all duration-200 flex flex-col justify-between gap-5 group">
             <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-accent/10 text-accent group-hover:scale-105 transition-transform shrink-0">
+              <div className="p-2 rounded-lg bg-primary/10 text-primary/90 group-hover:scale-105 transition-transform shrink-0">
                 <Lock className="h-5 w-5" />
               </div>
               <div className="min-w-0">

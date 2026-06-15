@@ -1,10 +1,14 @@
-import React, { useContext, useRef} from 'react'
+import React, { useContext, useRef, useState} from 'react'
 import { vebbleAiBackendContext } from '../../constants/VebbleAiContext';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle , Copy, Check, Share, Circle, Loader2, Share2} from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 function ChatSession() {
    const {sendPromptToSpring , aiData , input , setInput , showResult,isLoading} = useContext(vebbleAiBackendContext);
+   const [copyStatus, setCopyStatus] = useState(false);
+   const [shareStaus , setShareStatus] = useState(false);
+   const [actionLoading, setActionLoading] = useState({ type: null, active: false });
 
    const handleSend = async(e) => {
     e.preventDefault();
@@ -16,6 +20,42 @@ function ChatSession() {
       console.error("Sending failed :" , error);
     }
    }
+
+   const handleActionOnResponse = async (actionType) => {
+      if (actionLoading.active) return; 
+      
+      setActionLoading({ type: actionType, active: true });
+      
+      try {
+          if (actionType === "copy") {
+              await navigator.clipboard.writeText(aiData);
+              
+              setCopyStatus(true); 
+              setTimeout(() => {
+                  setCopyStatus(false);
+              }, 2000);
+              
+          } else if (actionType === "share") {
+              if (navigator.share) {
+                  await navigator.share({
+                      title: 'Vebble AI Response',
+                      text: aiData,
+                      url: window.location.href
+                  });
+                  setShareStatus(true);
+                  setTimeout(() => setShareStatus(false), 2000);
+              } else {
+                  await navigator.clipboard.writeText(aiData);
+                  alert("Share link copied to clipboard instead!");
+              }
+          }
+      } catch (err) {
+          console.error("Action handler exception:", err);
+      } finally {
+          setActionLoading({ type: null, active: false });
+      }
+  };
+
   
   return (
     <div className="flex flex-col flex-1 h-full w-full bg-base-100 relative overflow-hidden">
@@ -69,8 +109,9 @@ function ChatSession() {
                     
                     <div className="prose prose-sm max-w-none text-base-content prose-headings:text-base-content prose-strong:text-base-content">
                       <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
                         components={{
-                          a: ({ node, ...props }) => (
+                          a: ({ node, ...props}) => (
                             <a 
                               {...props} 
                               target="_blank" 
@@ -82,6 +123,38 @@ function ChatSession() {
                       >
                         {aiData}
                       </ReactMarkdown>
+                      <div className='flex justify-end items-center mt-3 pt-1 w-full bg-transparent rounded-lg'>
+                        <button 
+                            onClick={() => handleActionOnResponse("copy")} // 🚀 MAGIC HERE: Direct value parameter bhej di!
+                            className={`btn btn-sm btn-ghost rounded-full p-2 min-h-0 h-8 w-8 text-base-content/50 hover:text-primary hover:bg-base-300/40 transition-all duration-200`}
+                            disabled={copyStatus}
+                            title={copyStatus ? "Copied!" : "Copy to Clipboard"}
+                          >
+                            {actionLoading.active && actionLoading.type === "copy" ? (
+                                <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                              ) : copyStatus ? (
+                                <Check className="w-4 h-4 text-success scale-110 transition-transform duration-200" />
+                              ) : (
+                                <Copy className="w-4 h-4" />
+                              )}
+                          </button>
+
+                           <button 
+                              onClick={() => handleActionOnResponse("share")} 
+                              className="btn btn-sm btn-ghost rounded-full p-2 min-h-0 h-8 w-8 text-base-content/50 hover:text-primary hover:bg-base-300/40 transition-all duration-200"
+                              title="Share Response"
+                              disabled={actionLoading.active}
+                            >
+                              {/* 🚀 FIX 4: Fixed the typo from 'shareStaus' to 'shareStatus' */}
+                              {actionLoading.active && actionLoading.type === "share" ? (
+                                <Loader2 className="w-4 h-4 animate-spin text-primary" />
+                              ) : shareStaus ? ( 
+                                <Check className="w-4 h-4 text-success scale-110" />
+                              ) : (
+                                <Share2 className="w-4 h-4" />
+                              )}
+                            </button>
+                      </div>
                     </div>
 
                   ) : (

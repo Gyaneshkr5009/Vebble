@@ -48,8 +48,12 @@ function Sudoku() {
         });
       const result = await response.json();
 
-      if(result.errors){
+      if(result.errors && result.length > 0){
         throw new Error(result.errors[0].message);
+      }
+
+      if (!result.data || !result.data.newboard || !result.data.newboard.grids || result.data.newboard.grids.length === 0) {
+        throw new Error("Empty response or missing puzzle fields from server payload.");
       }
 
       const graphQlPayload = result.data;
@@ -187,7 +191,7 @@ function Sudoku() {
                 <button className="btn btn-xs btn-outline border border-base-content/20 font-black text-[10px] uppercase rounded-md h-7 min-h-[28px] p-0 hover:bg-base-content hover:text-base-100" onClick={handleReset}>Reset</button>
                 <button className="btn btn-xs btn-outline border border-base-content/20 font-black text-[10px] uppercase rounded-md h-7 min-h-[28px] p-0 hover:btn-success hover:text-success-content" onClick={handleCheck}>Check</button>
                 <button className="btn btn-xs btn-outline border border-base-content/20 font-black text-[10px] uppercase rounded-md h-7 min-h-[28px] p-0 hover:bg-base-content hover:text-base-100" onClick={handleShowSolution}>Solve</button>
-                <button className="btn btn-xs btn-outline border border-info/50 text-info font-black text-[10px] uppercase rounded-md h-7 min-h-[28px] p-0 hover:bg-info hover:text-base-100" onClick={fetchNewPuzzle}>New</button>
+                <button className="btn btn-xs btn-outline border border-info/50 text-info font-black text-[10px] uppercase rounded-md h-7 min-h-[28px] p-0 hover:bg-info hover:text-base-100" onClick={() => fetchNewPuzzle(boardSize)}>New</button>
               </div>
             </div>
 

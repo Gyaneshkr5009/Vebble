@@ -21,7 +21,7 @@ const SettingsPage = () => {
       <div className="space-y-6">
         {/* Minimal Feature Buttons Section */}
         <h3 className="text-lg font-semibold mb-3">Features</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {/* Theme Button */}
           <div className="p-4 rounded-xl border border-base-300 bg-base-200/40 hover:bg-base-200/80 transition-all duration-200 flex flex-col justify-between gap-5 group">
             <div className="flex items-start gap-3">

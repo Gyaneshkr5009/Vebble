@@ -24,9 +24,10 @@ function Sudoku() {
 
   const config = getGridConfig(boardSize);
 
-  const fetchNewPuzzle = async (forcedSize = boardSize) => {
+  const fetchNewPuzzle = async (forcedSize) => {
     try {
       setGameDifficulty("Loading...");
+      const cleanSize = (forcedSize && typeof forcedSize === 'number') ? forcedSize : boardSize;
       const difficultyArg = targetDifficulty ? `"${targetDifficulty}"` : 'null';
       
       const response = await fetch('https://vebble-ai-backend.onrender.com/api/games/sudoku-app', {
@@ -35,7 +36,7 @@ function Sudoku() {
           body: JSON.stringify({
             query: `
               query GetNewGame {
-                newboard(limit: 1, difficulty: ${difficultyArg}, size: ${forcedSize}) {
+                newboard(limit: 1, difficulty: ${difficultyArg}, size: ${cleanSize}) {
                   grids {
                     value
                     solution
@@ -48,7 +49,7 @@ function Sudoku() {
         });
       const result = await response.json();
 
-      if(result.errors && result.length > 0){
+      if(result.errors && result.errors.length > 0){
         throw new Error(result.errors[0].message);
       }
 
@@ -174,7 +175,7 @@ function Sudoku() {
             <div className="flex flex-col gap-1">
               <label className="text-[10px] font-black uppercase tracking-wider opacity-60 px-0.5">Pool Difficulty</label>
               <select 
-                className="select select-bordered select-xs w-full font-bold tracking-wider uppercase text-[11px] h-7 min-h-[28px] rounded-md border border-base-content/10 bg-base-100 focus:border-primary focus:outline-none shadow-sm cursor-pointer"
+                className="select select-xs w-full font-bold tracking-wider uppercase text-[11px] h-7 min-h-[28px] rounded-md border border-base-content/10 bg-base-100 focus:border-primary focus:outline-none shadow-sm cursor-pointer"
                 value={targetDifficulty || "RANDOM"}
                 onChange={(e) => setTargetDifficulty(e.target.value === "RANDOM" ? null : e.target.value)}
               >

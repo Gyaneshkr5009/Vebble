@@ -15,12 +15,14 @@ const getGridConfig = (size) => {
 function Sudoku() {
   const [solutions, setSolutions] = useState([]);
   const [selected, setSelected] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [boardSize, setBoardSize] = useState(9);
   const [board, setBoard] = useState(Array(9).fill(null).map(() => Array(9).fill(null)));
   const [puzzle, setPuzzle] = useState(Array(9).fill(null).map(() => Array(9).fill(null)));
   const [gamedifficulty, setGameDifficulty] = useState("Loading...");
   const [targetDifficulty, setTargetDifficulty] = useState(null);
+  const [checkButtonResponse , setCheckButtonResponse] = useState(2);
 
   const config = getGridConfig(boardSize);
 
@@ -30,13 +32,13 @@ function Sudoku() {
       const cleanSize = (forcedSize && typeof forcedSize === 'number') ? forcedSize : boardSize;
       const difficultyArg = targetDifficulty ? `"${targetDifficulty}"` : 'null';
       
-      const response = await fetch('https://vebble-ai-backend.onrender.com/api/games/sudoku-app', {
+      const response = await fetch('http://localhost:8080/api/games', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             query: `
               query GetNewGame {
-                newboard(limit: 1, difficulty: ${difficultyArg}, size: ${cleanSize}) {
+                newSudokuBoard(limit: 1, difficulty: ${difficultyArg}, size: ${cleanSize}) {
                   grids {
                     value
                     solution
@@ -53,15 +55,15 @@ function Sudoku() {
         throw new Error(result.errors[0].message);
       }
 
-      if (!result.data || !result.data.newboard || !result.data.newboard.grids || result.data.newboard.grids.length === 0) {
+      if (!result.data || !result.data.newSudokuBoard || !result.data.newSudokuBoard.grids || result.data.newSudokuBoard.grids.length === 0) {
         throw new Error("Empty response or missing puzzle fields from server payload.");
       }
 
       const graphQlPayload = result.data;
       
-      const apiGrid = graphQlPayload.newboard.grids[0].value;
-      const apiSolution = graphQlPayload.newboard.grids[0].solution;
-      const apiDifficulty = graphQlPayload.newboard.grids[0].difficulty;
+      const apiGrid = graphQlPayload.newSudokuBoard.grids[0].value;
+      const apiSolution = graphQlPayload.newSudokuBoard.grids[0].solution;
+      const apiDifficulty = graphQlPayload.newSudokuBoard.grids[0].difficulty;
 
       const formattedPuzzle = apiGrid.map(row => 
         row.map(cell => cell === ' ' ? null : cell) // cell having value as ' ' changing to null for new input
@@ -84,6 +86,7 @@ function Sudoku() {
   useEffect(() => {
     fetchNewPuzzle(9);
   }, []);
+
 
   const handleInput = (rIdx, cIdx, value) => {
     const cleanValue = value.trim() === "" ? null : value.toUpperCase();
@@ -122,12 +125,16 @@ function Sudoku() {
     const isFull = board.every(row => row.every(col => col !== null));
 
     if (isCorrect) {
-      alert("Congratulations! You solved the puzzle!");
+      setCheckButtonResponse(1);
     } else if (!isFull) {
-      alert("Keep going! There are still empty spaces, but check for mistakes!");
+      setCheckButtonResponse(2);
     } else {
-      alert("The board is full, but there are mistakes. Try resetting or fixing them.");
+      setCheckButtonResponse(3);
     }
+    setIsVisible(true);
+    setTimeout(() => {
+      setIsVisible(false);
+    },3000);
   };
 
   const handleSizeChange = (newSize) => {

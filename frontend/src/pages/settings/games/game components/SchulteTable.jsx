@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import ReusableButton from '../../../../components/basic components/ReusableButton';
 import { StepBack } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import useTimer from '../../../../components/useTimer';
 
 const SchulteTable = () => {
   const navigate = useNavigate();
@@ -10,16 +11,14 @@ const SchulteTable = () => {
   const nextNumber = useRef(1);
   const [flashCell , setFlashCell] = useState(null);
 
-  const [time, setTime] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-  const timerRef = useRef(null);
+  const { time, isActive, startTimer, stopTimer, resetTimer } = useTimer();
 
   const [, setUpdateTrigger] = useState(0);
 
   const fetchNewPuzzle = async (forcedSize) => {
     try {
       const cleanSize = (forcedSize && typeof forcedSize === 'number') ? forcedSize : boardSize;
-      resetTimerState();
+      resetTimer();
       
       const response = await fetch('https://vebble-ai-backend.onrender.com/api/games', {
         method: 'POST', 
@@ -29,7 +28,6 @@ const SchulteTable = () => {
             query GetNewGame {
               newSchulteTable(size: ${cleanSize}) {
                 schulteBoard
-                message
               }
             }
           `
@@ -71,13 +69,9 @@ const SchulteTable = () => {
       setTimeout(() => setFlashCell(null) , 300);
       const totalCells = boardSize * boardSize;
       if(nextNumber.current === totalCells){
-        if(timerRef.current){
-          clearInterval(timerRef.current);
-          timerRef.current=null;
-        }
-        setIsActive(false);
+        stopTimer();
         alert(`🎉 Awesome! You completed the ${boardSize}x${boardSize} table in ${time} seconds!`);
-        resetTimerState();
+        resetTimer();
         fetchNewPuzzle(boardSize);
       } else {
         nextNumber.current = nextNumber.current + 1;
@@ -90,29 +84,8 @@ const SchulteTable = () => {
     }
   }
 
-  const startTimer = () => {
-    if (!isActive && !timerRef.current) {
-      setIsActive(true);
-      timerRef.current = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-      }, 1000);
-    }
-  };
-
-  const resetTimerState = () => {
-    setIsActive(false);
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
-    setTime(0);
-  };
-
   useEffect(() => {
     fetchNewPuzzle(5);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
   },[]);
 
   return (

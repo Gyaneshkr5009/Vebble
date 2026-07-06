@@ -168,7 +168,7 @@ function Sudoku() {
                 <span className="sm:hidden text-base-content/30">•</span>
                 <div className="flex items-center gap-1.5">
                   <span>🎯 Live Diff:</span>
-                  <span className="text-info font-black">{gamedifficulty}</span>
+                  <span className="text-primary font-black">{gamedifficulty}</span>
                 </div>
               </div>
             </div>
@@ -270,7 +270,7 @@ function Sudoku() {
                       onFocus={() => setSelected([rIdx, cIdx])}
                       onChange={(e) => handleInput(rIdx, cIdx, e.target.value)}
                       className={`w-full h-full text-center font-mono outline-none bg-transparent focus:bg-primary/10 transition-colors duration-100 ${config.textClass} ${
-                        isPrefilled ? 'font-black text-base-content' : 'font-semibold text-info'
+                        isPrefilled ? 'font-black text-base-content' : 'font-semibold text-primary'
                       }`}
                     />
                   </div>

@@ -1,11 +1,20 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import ReusableButton from '../../../components/basic components/ReusableButton'
+import { StepBack } from 'lucide-react';
 
 function games() {
   const navigate = useNavigate();
   return (
     <div className='min-h-screen container px-4 pt-20 pb-2 min-w-full'>
+      <div className="pt-2 flex justify-start mb-4">
+          <ReusableButton
+            onClick={() => navigate('/settings')}
+            icon={StepBack}
+          >
+            Settings
+          </ReusableButton>
+        </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
         {/* Sudoku  */}
         <div className="group relative flex flex-col justify-between p-5 rounded-xl border border-base-300 bg-base-200/30 hover:bg-base-200/60 hover:border-accent/40 transition-all duration-200 overflow-hidden">

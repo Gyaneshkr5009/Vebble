@@ -32,7 +32,7 @@ function Sudoku() {
       const cleanSize = (forcedSize && typeof forcedSize === 'number') ? forcedSize : boardSize;
       const difficultyArg = targetDifficulty ? `"${targetDifficulty}"` : 'null';
       
-      const response = await fetch('http://localhost:8080/api/games', {
+      const response = await fetch('https://vebble-ai-backend.onrender.com/api/games', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

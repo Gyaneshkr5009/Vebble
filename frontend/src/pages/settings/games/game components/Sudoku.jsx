@@ -265,7 +265,26 @@ function Sudoku() {
             });
           })}
         </div>
-
+      </div>
+      <div className='fixed bottom-6 left-1/2 -translate-x-1/2 z-50 pointer-events-none'>
+        {isVisible && checkButtonResponse && (
+          <div className={`w-[90vw] sm:w-auto max-w-[340px] p-4 rounded-xl text-center shadow-2xl border backdrop-blur-md transition-all duration-300 transform animate-fade-in ${
+            checkButtonResponse === 1 ? 'bg-emerald-950/80 border-emerald-500/30 text-emerald-400 shadow-emerald-950/50' :
+            checkButtonResponse === 2 ? 'bg-cyan-950/80 border-cyan-500/30 text-cyan-400 shadow-cyan-950/50' : 
+            'bg-rose-950/80 border-rose-500/30 text-rose-400 shadow-rose-950/50'
+          }`}>
+            <h4 className="font-bold text-sm uppercase tracking-widest font-mono">
+              {checkButtonResponse === 1 && "🎉 Success!"}
+              {checkButtonResponse === 2 && "⚡ Progress Status"}
+              {checkButtonResponse === 3 && "❌ Conflict Detected"}
+            </h4>
+            <p className="text-xs font-medium mt-1 text-slate-300">
+              {checkButtonResponse === 1 && "Amazing job! You solved the puzzle perfectly!"}
+              {checkButtonResponse === 2 && "Keep going! There are still blank spaces left inside the matrix!"}
+              {checkButtonResponse === 3 && "The board configuration contains active overlapping mistakes."}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );

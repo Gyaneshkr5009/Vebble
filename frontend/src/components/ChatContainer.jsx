@@ -48,54 +48,63 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-auto">
+    <div className="flex-1 flex flex-col overflow-hidden h-full">
       <ChatHeader />
 
-      <div
-        className="flex-1 overflow-y-auto p-4 space-y-4 bg-cover bg-center"
-        style={{
-          backgroundImage: theme ? `url(${theme})` : "none",
-          backgroundSize: "100% 100%" // this distorts the image like object-fill
-        }}
-      >
-        {messages.map((message) => (
-          <div
-            key={message._id}
-            className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
-            ref={messageEndRef}
-          >
-            <div className=" chat-image avatar">
-              <div className="size-10 rounded-full border">
-                <img
-                  src={
-                    message.senderId === authUser._id
-                      ? authUser.profilePic || "/avatar.png"
-                      : selectedUser.profilePic || "/avatar.png"
-                  }
-                  alt="profile pic"
-                />
+      {/* Relative Wrapper for Chat History and Floating Input */}
+      <div className="flex-1 relative flex flex-col overflow-hidden">
+        
+        {/* Chat History*/}
+        <div
+          className="flex-1 overflow-y-auto p-4 space-y-4 bg-cover bg-center pb-24 px-10" // Added pb-24 so messages aren't hidden behind the floating input
+          style={{
+            backgroundImage: theme ? `url(${theme})` : "none",
+            backgroundSize: "100% 100%"
+          }}
+        >
+          {messages.map((message) => (
+            <div
+              key={message._id}
+              className={`chat ${message.senderId === authUser._id ? "chat-end" : "chat-start"}`}
+              ref={messageEndRef}
+            >
+              <div className="chat-image avatar">
+                <div className="size-10 rounded-full border">
+                  <img
+                    src={
+                      message.senderId === authUser._id
+                        ? authUser.profilePic || "/avatar.png"
+                        : selectedUser.profilePic || "/avatar.png"
+                    }
+                    alt="profile pic"
+                  />
+                </div>
+              </div>
+              <div className="chat-bubble chat-bubble-accent p-2 px-2 rounded-xl max-w-[75%]">
+                {message.image && (
+                  <img
+                    src={message.image}
+                    alt="Attachment"
+                    className="rounded-md mb-1 w-full max-h-60 object-cover"
+                  />
+                )}
+                {message.text && <p className="text-sm">{message.text}</p>}
+                <div className="flex justify-end mt-1">
+                  <time className="text-[11px] opacity-60 whitespace-nowrap">
+                    {formatMessageTime(message.createdAt)}
+                  </time>
+                </div>
               </div>
             </div>
-            <div className="chat-bubble chat-bubble-accent p-2 px-2 rounded-xl max-w-[75%]">
-              {message.image && (
-                <img
-                  src={message.image}
-                  alt="Attachment"
-                  className="rounded-md mb-1 w-full max-h-60 object-cover"
-                />
-              )}
-              {message.text && <p className="text-sm">{message.text}</p>}
-              <div className="flex justify-end mt-1">
-                <time className="text-[11px] opacity-60 whitespace-nowrap">
-                  {formatMessageTime(message.createdAt)}
-                </time>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <MessageInput />
+        {/* 3. Floating Message Input Box */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/20 to-transparent backdrop-blur-xs">
+          <MessageInput />
+        </div>
+
+      </div>
     </div>
   )
 }

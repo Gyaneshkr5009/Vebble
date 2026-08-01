@@ -20,7 +20,7 @@ const SchulteTable = () => {
       const cleanSize = (forcedSize && typeof forcedSize === 'number') ? forcedSize : boardSize;
       resetTimer();
       
-      const response = await fetch('https://vebble-ai-backend.onrender.com/api/games', {
+      const response = await fetch('http://localhost:8080/api/games', {
         method: 'POST', 
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

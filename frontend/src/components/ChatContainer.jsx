@@ -99,8 +99,8 @@ const ChatContainer = () => {
           ))}
         </div>
 
-        {/* 3. Floating Message Input Box */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/20 to-transparent backdrop-blur-xs">
+        {/* Floating Message Input Box */}
+        <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/20 to-transparent backdrop-blur-xs">
           <MessageInput />
         </div>
 

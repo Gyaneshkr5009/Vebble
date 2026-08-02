@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState , useEffect } from "react";
 import { useChatStore } from "../store/useChatStore";
 import { Image, SendHorizontal, X , Smile} from "lucide-react";
 import toast from "react-hot-toast";
@@ -10,6 +10,7 @@ const MessageInput = () => {
   const fileInputRef = useRef(null);
   const { sendMessage } = useChatStore();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const textareaRef = useRef(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -25,6 +26,13 @@ const MessageInput = () => {
     };
     reader.readAsDataURL(file);
   };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto"; 
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`;
+    }
+  }, [text]);
 
   const removeImage = () => {
     setImagePreview(null);
@@ -56,7 +64,7 @@ const MessageInput = () => {
 
   return (
     // relative lagaya taaki emoji box sahi jagah float kare
-    <div className="w-full p-2 bg-transparent flex flex-col gap-1.5 justify-end relative">
+    <div className="w-full p-1 bg-transparent flex flex-col gap-1.5 justify-end relative">
       
       {/* 1. Emoji Picker Box (Floating Over Chat) */}
       {showEmojiPicker && (
@@ -93,9 +101,9 @@ const MessageInput = () => {
       )}
 
       {/* Main Row */}
-      <form onSubmit={handleSendMessage} className="flex items-end gap-2 px-1">
+      <form onSubmit={handleSendMessage} className="flex items-end w-full">
         
-        <div className="flex-1 flex items-center gap-1 bg-base-100 shadow-sm border border-base-300 rounded-full px-3 py-1.5 min-h-[46px]">
+        <div className="flex-1 flex items-end bg-base-100 shadow-sm border border-base-300 rounded-2xl px-1 py-1.5 min-h-[46px] min-w-0 max-w-full">
           
           {/* Hidden File Input */}
           <input
@@ -109,29 +117,37 @@ const MessageInput = () => {
           {/* Attachment Icon Inside the Pill */}
           <button
             type="button"
-            className={`btn btn-ghost btn-circle btn-sm min-h-0 h-9 w-9 p-0 text-base-content/60 hover:text-primary transition-colors`}
+            className={`btn btn-ghost btn-circle btn-sm min-h-0 h-8 w-8 p-0 text-base-content/60 mb-0.5 hover:text-primary transition-colors`}
             onClick={() => fileInputRef.current?.click()}
           >
-            <Image size={23} className={imagePreview ? "text-emerald-500" : ""} />
+            <Image size={20} className={imagePreview ? "text-emerald-500" : ""} />
           </button>
 
           {/* Emoji Toggle Button */}
           <button
             type="button"
-            className={`btn btn-ghost btn-circle btn-sm min-h-0 h-9 w-9 p-0 text-base-content/60 hover:text-primary ${showEmojiPicker ? "text-emerald-500" : ""}`}
+            className={`btn btn-ghost btn-circle btn-sm min-h-0 h-8 w-8 p-0 mb-0.5 text-base-content/60 hover:text-primary ${showEmojiPicker ? "text-emerald-500" : ""}`}
             onClick={() => setShowEmojiPicker(!showEmojiPicker)}
           >
-            <Smile size={23} />
+            <Smile size={20} />
           </button>
 
           {/* Text Input Field */}
-          <input
-            type="text"
-            className="flex-1 bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-sm md:text-base py-1 placeholder:text-base-content/40 text-base-content"
+          <textarea
+            ref={textareaRef}
+            rows={1}
+            className="flex-1 bg-transparent border-none outline-none focus:outline-none focus:ring-0 text-sm md:text-base py-1.5 placeholder:text-base-content/40 text-base-content resize-none min-w-0 max-h-[120px] overflow-y-auto leading-relaxed"
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
             onFocus={() => setShowEmojiPicker(false)}
+            onKeyDown={(e) => {
+              // Web custom style: Shift+Enter dabaane par line break hoga, aur sirf Enter dabaane par message send ho jayega!
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage(e);
+              }
+            }}
           />
 
           {/* 2. Floating Circle Send Button (Pill ke BAHAAR) */}

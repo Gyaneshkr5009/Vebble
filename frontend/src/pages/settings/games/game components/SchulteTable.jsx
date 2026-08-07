@@ -3,6 +3,7 @@ import ReusableButton from '../../../../components/basic components/ReusableButt
 import { StepBack } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import useTimer from '../../../../components/useTimer';
+import { axiosSpringInstance } from '../../../../lib/axios';
 
 const SchulteTable = () => {
   const navigate = useNavigate();
@@ -20,21 +21,17 @@ const SchulteTable = () => {
       const cleanSize = (forcedSize && typeof forcedSize === 'number') ? forcedSize : boardSize;
       resetTimer();
       
-      const response = await fetch('https://vebble-ai-backend.onrender.com/api/games', {
-        method: 'POST', 
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          query: `
-            query GetNewGame {
-              newSchulteTable(size: ${cleanSize}) {
-                schulteBoard
-              }
+      const response = await axiosSpringInstance.post('/games', {
+        query: `
+          query GetNewGame {
+            newSchulteTable(size: ${cleanSize}) {
+              schulteBoard
             }
-          `
-        })
+          }
+        `
       });
 
-      const result = await response.json(); 
+      const result = response.data; 
 
       if (result.errors && result.errors.length > 0) {
         throw new Error(result.errors[0].message);

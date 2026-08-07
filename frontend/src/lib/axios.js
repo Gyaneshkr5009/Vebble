@@ -7,5 +7,5 @@ export const axiosInstance = axios.create({
 });
 
 export const axiosSpringInstance = axios.create({
-    baseURL: import.meta.env.MODE === "development" ? "http://localhost:8080/api" : "/api",
+    baseURL: import.meta.env.MODE === "development" ? "http://localhost:8080/api" : "https://vebble-ai-backend.onrender.com/api",
 })

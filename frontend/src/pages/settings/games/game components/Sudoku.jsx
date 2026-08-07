@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReusableButton from '../../../../components/basic components/ReusableButton';
 import { StepBack } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { axiosSpringInstance } from '../../../../lib/axios';
 
 const getGridConfig = (size) => {
   switch (size) {
@@ -36,24 +37,20 @@ function Sudoku() {
       const cleanSize = (forcedSize && typeof forcedSize === 'number') ? forcedSize : boardSize;
       const difficultyArg = targetDifficulty ? `"${targetDifficulty}"` : 'null';
       
-      const response = await fetch('https://vebble-ai-backend.onrender.com/api/games', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query: `
-              query GetNewGame {
-                newSudokuBoard(limit: 1, difficulty: ${difficultyArg}, size: ${cleanSize}) {
-                  grids {
-                    value
-                    solution
-                    difficulty
-                  }
+      const response = await axiosSpringInstance.post('/games', {
+          query: `
+            query GetNewGame {
+              newSudokuBoard(limit: 1, difficulty: ${difficultyArg}, size: ${cleanSize}) {
+                grids {
+                  value
+                  solution
+                  difficulty
                 }
               }
-            `
-          })
+            }
+          `
         });
-      const result = await response.json();
+      const result = response.data;
 
       if(result.errors && result.errors.length > 0){
         throw new Error(result.errors[0].message);

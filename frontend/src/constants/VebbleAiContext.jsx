@@ -1,4 +1,5 @@
 import React, {createContext, useState } from 'react'
+import { axiosSpringInstance } from '../lib/axios';
 
 export const vebbleAiBackendContext = createContext();
 
@@ -22,13 +23,11 @@ function VebbleAiContext({children}) {
         setResponseState({data : null , loading : true , error : null});
 
         try{
-            const response = await fetch('https://vebble-ai-backend.onrender.com/api/vebble-ai/reply', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ content: userInput}),
+            const response = await axiosSpringInstance.post('/vebble-ai/reply', { 
+                content: userInput 
             });
+
+/* { this is old fetch mmethod}
 
             if (!response.ok) {
                 if (response.status === 429) {
@@ -39,7 +38,8 @@ function VebbleAiContext({children}) {
                 }
                 else throw new Error(`Server responded with status: ${response.status}`);
             }
-            const result = await response.text();
+*/
+            const result = response.data;
 
             // State update with successful backend data
             setResponseState({
